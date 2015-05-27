@@ -1,4 +1,4 @@
-package servers;
+package chat;
 
 import java.io.*;
 
@@ -15,11 +15,11 @@ public class ChatMessage implements Serializable {
         message = _message;
     }
 
-    String getCommand() {
+    public String getCommand() {
         return command;
     }
 
-    String getMessage() {
+    public String getMessage() {
         return message;
     }
 }

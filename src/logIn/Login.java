@@ -1,5 +1,7 @@
 package logIn;
 
+import globals.username;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -21,6 +23,7 @@ import javax.swing.JTextField;
 import mainPage.MainPage;
 
 public class Login {
+	private static String username;
  public static JFrame frame;
  	public Login(){
  		frame = new JFrame("Welcome - Sign In");
@@ -38,8 +41,10 @@ public class Login {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
 				frame.setVisible(false);
-				new MainPage();
+				username = textFieldUserName.getText();
+				new MainPage(username);
 			}
 		});
 
@@ -81,7 +86,7 @@ public class Login {
 		JLabel labelUserName = new JLabel("User Name", JLabel.LEFT);
 		panouUserName.setLayout(new FlowLayout());
 		panouUserName.add(labelUserName );
-		JTextField textFieldUserName = new JTextField(20);
+		textFieldUserName = new JTextField(20);
 		panouUserName.add(textFieldUserName);
 		
 		JPanel panouPassword = new JPanel();
@@ -100,5 +105,7 @@ public class Login {
 		frame.invalidate();
 		frame.repaint();
 	}
+	
+	private static JTextField textFieldUserName;
 
 }

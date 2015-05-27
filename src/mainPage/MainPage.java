@@ -12,13 +12,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import chat.ChatMainForm;
+import servers.ChatMainForm;
 
 
 public class MainPage {
 	public static JFrame frame;
 
-	public MainPage() {
+	public MainPage(final String RegisterdUser) {
 		frame = new JFrame("Main Dialog");
 		frame.setLayout(new BorderLayout());
 		frame.setSize(600, 700);
@@ -43,7 +43,7 @@ public class MainPage {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				frame.setVisible(false);
-				new ChatMainForm();
+				new ChatMainForm(RegisterdUser);
 			}
 		});
 		

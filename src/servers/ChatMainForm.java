@@ -1,4 +1,4 @@
-package chat;
+package servers;
 
 
 import java.awt.GridBagConstraints;
@@ -21,7 +21,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
-import servers.ChatMessage;
+import chat.ChatMessage;
+import chat.Client;
+import chat.Client.MessageListner;
 
 
 public class ChatMainForm extends JFrame implements ActionListener, Client.MessageListner {
@@ -43,10 +45,10 @@ public class ChatMainForm extends JFrame implements ActionListener, Client.Messa
 
     private Client mClient;
 
-    public ChatMainForm() throws HeadlessException {
+    public ChatMainForm(String username) throws HeadlessException {
         super("ChatMainForm");
         initUI();
-        startClient();
+        startClient(username);
         refreshUserList();
         pack();
     }
@@ -168,11 +170,10 @@ public class ChatMainForm extends JFrame implements ActionListener, Client.Messa
 
 
 
-    private boolean startClient() {
+    private boolean startClient(String clientName) {
         int portNumber = 1700;
         String serverAddress = "localhost";
-        String userName = "User" + (int) (Math.random() * 100000);
-        mClient = new Client(serverAddress, portNumber, userName, this,"User");
+        mClient = new Client(serverAddress, portNumber, clientName, this,"User");
         return mClient.start();
     }
 }

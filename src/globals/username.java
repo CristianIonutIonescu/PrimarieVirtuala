@@ -1,6 +1,6 @@
 package globals;
 
-public class username {
+public class username extends Singletone {
 	private String username;
 
 	/**
