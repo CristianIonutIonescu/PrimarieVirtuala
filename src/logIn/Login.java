@@ -39,7 +39,7 @@ public class Login {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				frame.setVisible(false);
-				new Gui();
+				new MainPage();
 			}
 		});
 
@@ -51,7 +51,7 @@ public class Login {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				new MainPage();
+				new Register();
 			}
 		});
 		
@@ -63,12 +63,12 @@ public class Login {
 		frame.repaint();
  	}
 	public static void main(String s[]) {
+		
 		 new Login();
 	}
 
 	public static void Username() {
 		
-		JPanel PanouText = new JPanel();
 		JLabel labelText = new JLabel("Sign In", JLabel.CENTER);
 		labelText.setFont(new Font("Comic Sans MS", Font.PLAIN, 26));
 		labelText.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));

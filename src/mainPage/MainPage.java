@@ -1,98 +1,83 @@
 package mainPage;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+
+import chat.ChatMainForm;
+
 
 public class MainPage {
 	public static JFrame frame;
 
 	public MainPage() {
-		
-		frame = new JFrame("Register - Sign Up");
-		frame.setSize(500, 650);
+		frame = new JFrame("Main Dialog");
+		frame.setLayout(new BorderLayout());
+		frame.setSize(600, 700);
 		frame.setVisible(true);
-		
-		Username();
-		JPanel panel = new JPanel();
-		frame.add(panel);
-		JButton button = new JButton("OK");
-		panel.add(button);
 
-		JButton button2 = new JButton("Cancel");
-		panel.add(button2);
+		Username();
+
+		JPanel panel1 = new JPanel();
+
+		JButton button = new JButton("Organization Chart");
+		button.setPreferredSize(new Dimension(150, 50));
+
+		panel1.add(button);
+
+		JPanel panel2 = new JPanel();
+		JButton button2 = new JButton("Chat");
+		button2.setPreferredSize(new Dimension(150, 50));
+		panel2.add(button2);
+		
+		button2.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.setVisible(false);
+				new ChatMainForm();
+			}
+		});
+		
+		
+
+		JPanel panel3 = new JPanel();
+		JButton button3 = new JButton("Documents");
+		button3.setPreferredSize(new Dimension(150, 50));
+		panel3.add(button3);
+
+		JPanel panel4 = new JPanel();
+		panel4.add(panel1);
+		panel4.add(panel2);
+		panel4.add(panel3);
+
+		panel4.setLocation(400, 10);
+		frame.add(panel4, BorderLayout.SOUTH);
 
 		frame.revalidate();
 		frame.invalidate();
 		frame.repaint();
 	}
-	
 
 	public static void Username() {
 		JPanel panouContainer = new JPanel();
-		frame.add(panouContainer, BorderLayout.NORTH);
 
 		JPanel panouText = new JPanel();
-		JLabel labelText = new JLabel("Sign Up", JLabel.CENTER);
-		labelText.setFont(new Font("Comic Sans MS", Font.PLAIN, 32));
-		labelText.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-		
+		JLabel labelText = new JLabel("City Hall");
+		labelText.setFont(new Font("ARIAL", Font.PLAIN, 32));
+		labelText.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 40));
 
-		JPanel panouFName = new JPanel();
-		JLabel labelFName = new JLabel("First Name          ", JLabel.LEFT);
-		panouFName.setLayout(new FlowLayout());
-		panouFName.add(labelFName);
-		JTextField textFieldFName = new JTextField(20);
-		panouFName.add(textFieldFName);
-
-		JPanel panouLName = new JPanel();
-		JLabel labelLName = new JLabel("Last Name           ", JLabel.LEFT);
-		panouLName.setLayout(new FlowLayout());
-		panouLName.add(labelLName);
-		JTextField textFieldName = new JTextField(20);
-		panouLName.add(textFieldName);
-
-		
-		JPanel panouUserName = new JPanel();
-		JLabel labelUserName = new JLabel("UserName           ", JLabel.LEFT);
-		panouUserName.setLayout(new FlowLayout());
-		panouUserName.add(labelUserName);
-		JTextField textFieldUserName = new JTextField(20);
-		panouUserName.add(textFieldUserName);
-
-		JPanel panouPassword = new JPanel();
-		JLabel labelPassword = new JLabel("Password             ", JLabel.LEFT);
-		panouPassword.setLayout(new FlowLayout());
-		panouPassword.add(labelPassword);
-		JPasswordField textFieldPassword = new JPasswordField(20);
-		panouPassword.add(textFieldPassword);
-		
-		JPanel panouRPassword = new JPanel();
-		JLabel labelRPassword = new JLabel("Repeat Password", JLabel.LEFT);
-		panouRPassword.setLayout(new FlowLayout());
-		panouRPassword.add(labelRPassword);
-		JPasswordField textFieldRPassword = new JPasswordField(20);
-		panouRPassword.add(textFieldRPassword);
-
-		panouContainer.setLayout(new GridLayout(6,1));
-		
-		
 		panouContainer.add(labelText);
-		panouContainer.add(panouFName);
-		panouContainer.add(panouLName);
-		panouContainer.add(panouUserName);
-		panouContainer.add(panouPassword);
-		panouContainer.add(panouRPassword);
-		
+
+		frame.add(panouContainer);
 
 		frame.revalidate();
 		frame.invalidate();
