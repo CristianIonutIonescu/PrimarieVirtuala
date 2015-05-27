@@ -1,4 +1,4 @@
-package logIn;
+package mainPage;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -13,10 +13,10 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class guireg {
+public class MainPage {
 	public static JFrame frame;
 
-	public guireg() {
+	public MainPage() {
 		
 		frame = new JFrame("Register - Sign Up");
 		frame.setSize(500, 650);

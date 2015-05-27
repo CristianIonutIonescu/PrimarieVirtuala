@@ -18,6 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import mainPage.MainPage;
+
 public class Login {
  public static JFrame frame;
  	public Login(){
@@ -49,7 +51,7 @@ public class Login {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				new guireg();
+				new MainPage();
 			}
 		});
 		
