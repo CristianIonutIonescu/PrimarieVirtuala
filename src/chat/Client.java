@@ -5,6 +5,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import servers.ChatMessage;
+
 public class Client {
 
     public interface MessageListner {

@@ -21,6 +21,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
+import servers.ChatMessage;
+
 
 public class ChatMainForm extends JFrame implements ActionListener, Client.MessageListner {
 
