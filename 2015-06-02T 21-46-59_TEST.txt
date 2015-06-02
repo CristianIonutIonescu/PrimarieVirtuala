@@ -1,0 +1,14 @@
+
+Conectiune acceptata localhost/127.0.0.1:1700
+21:46:37 casa: aaa
+
+ 
+21:46:38 casa: aaaa
+
+ 
+21:46:40 casa: aaa
+
+ 
+21:46:59 casa: asa
+
+ 
