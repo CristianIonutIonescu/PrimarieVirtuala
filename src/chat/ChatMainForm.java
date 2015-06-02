@@ -1,4 +1,4 @@
-package servers;
+package chat;
 
 
 import java.awt.GridBagConstraints;
@@ -8,22 +8,27 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
 
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
-import chat.ChatMessage;
-import chat.Client;
-import chat.Client.MessageListner;
+import servers.ChatMessage;
 
 
 public class ChatMainForm extends JFrame implements ActionListener, Client.MessageListner {
@@ -35,27 +40,31 @@ public class ChatMainForm extends JFrame implements ActionListener, Client.Messa
     private JTextArea mChatHistory;
     private JButton mSend;
     private JButton mRefreshList;
+    private JButton mSaveContent;
     @SuppressWarnings("rawtypes")
 	private JList mList;
     private String[] mUserList = new String[]{};
+    private ArrayList<String> mChatConversation = new ArrayList<String>();
     private boolean isWaitingForUserList = false;
 
-    private JRadioButton broadCastRadio = new JRadioButton("bcast");
-    private JRadioButton privateCastRadio = new JRadioButton("priv");
-
     private Client mClient;
+    private final SimpleDateFormat sdf;
+    private final String ChatSubject;
 
-    public ChatMainForm(String username) throws HeadlessException {
+    public ChatMainForm(String username,String chatSubject) throws HeadlessException {
         super("ChatMainForm");
+        sdf = new SimpleDateFormat("yyyy-MM-dd'T' HH-mm-ss");
         initUI();
         startClient(username);
         refreshUserList();
         pack();
+        ChatSubject = chatSubject;
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
 	private void initUI() {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        
         setVisible(true);
         mPanel=new JPanel();
         GridBagLayout layout = new GridBagLayout();
@@ -92,20 +101,6 @@ public class ChatMainForm extends JFrame implements ActionListener, Client.Messa
         mPanel.add(mSend, gbc);
         mSend.addActionListener(this);
 
-        //Group the radio buttons.
-        ButtonGroup group = new ButtonGroup();
-        group.add(broadCastRadio);
-        group.add(privateCastRadio);
-        broadCastRadio.setSelected(true);
-
-        //Put the radio buttons in a column in a panel.
-        gbc.fill = GridBagConstraints.NONE;
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        mPanel.add(broadCastRadio, gbc);
-        gbc.gridx = 1;
-        mPanel.add(privateCastRadio, gbc);
-
         gbc.fill = GridBagConstraints.BOTH;
         gbc.gridx = 1;
         gbc.gridy = 0;
@@ -123,6 +118,13 @@ public class ChatMainForm extends JFrame implements ActionListener, Client.Messa
         gbc.gridx = 2;
         mPanel.add(mRefreshList, gbc);
         
+    	mSaveContent = new JButton("SAVE");
+    	gbc.fill = GridBagConstraints.NONE;
+        gbc.gridy = 1;
+        gbc.gridx = 3;
+        mPanel.add(mSaveContent, gbc);
+        mSaveContent.addActionListener(this);
+        
         this.addWindowListener(new WindowAdapter() {
 
             @Override
@@ -138,20 +140,41 @@ public class ChatMainForm extends JFrame implements ActionListener, Client.Messa
         isWaitingForUserList = true;
         mClient.sendMessage(new ChatMessage("LIST", ""));
     }
+    
+    private void saveConversation() throws IOException{
+    	 String fileName = sdf.format(new Date()) +"_" + ChatSubject + ".txt";
+    	 
+    	 Writer writer = null;
+
+    	 try {
+    	     writer = new BufferedWriter(new OutputStreamWriter(
+    	           new FileOutputStream(fileName), "utf-8"));
+    	     for(int i = 1 ;i<mChatConversation.size();i++){
+    	    	 writer.write(mChatConversation.get(i));
+    	    	 ((BufferedWriter) writer).newLine();
+    	     }
+    	 } catch (IOException ex) {
+    	 } finally {
+    	    try {writer.close();} catch (Exception ex) {/*ignore*/}
+    	 }
+    	 System.out.println(fileName);
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == mSend && !Objects.equals(mNewMsg.getText(), "")) {
 
-            if(privateCastRadio.isSelected()) {
-                mClient.sendMessage(new ChatMessage("MSG",mUserList[mList.getSelectedIndex()] + " " + mNewMsg.getText()));
-            } else {
-                mClient.sendMessage(new ChatMessage("BCAST", mNewMsg.getText()));
-            }
+            mClient.sendMessage(new ChatMessage("BCAST", mNewMsg.getText()));
             mNewMsg.setText("");
             
         } else if(e.getSource() == mRefreshList) {
         	refreshUserList();
+        } else if(e.getSource() == (JButton)mSaveContent){
+				try {
+					saveConversation();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
         }
     }
 
@@ -160,6 +183,7 @@ public class ChatMainForm extends JFrame implements ActionListener, Client.Messa
     public void onMessageReceived(String message) {
         if(!isWaitingForUserList) {
             mChatHistory.setText(mChatHistory.getText() + '\n' + message);
+            mChatConversation.add(message + "\n");
             mScrollPane.scrollRectToVisible(mChatHistory.getBounds());
         } else {
             isWaitingForUserList = false;

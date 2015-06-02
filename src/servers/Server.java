@@ -11,8 +11,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.StringTokenizer;
 
-import chat.ChatMessage;
-
 public class Server {
 
     private static int uniqueId;

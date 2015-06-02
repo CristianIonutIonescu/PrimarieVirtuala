@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import servers.ChatMainForm;
+import chat.ChatMainForm;
 
 
 public class MainPage {
@@ -43,7 +43,7 @@ public class MainPage {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				frame.setVisible(false);
-				new ChatMainForm(RegisterdUser);
+				new ChatMainForm(RegisterdUser,"TEST");
 			}
 		});
 		

@@ -5,6 +5,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import servers.ChatMessage;
+
 public class Client {
 
     public interface MessageListner {
@@ -17,7 +19,7 @@ public class Client {
     private Socket socket;
     private final String server, username;
     private final int port;
-    private final String type;
+    private String type;
 
     public Client(String _server, int _port, String _username, MessageListner _callback, String _type) {
         server = _server;

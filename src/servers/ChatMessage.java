@@ -1,4 +1,4 @@
-package chat;
+package servers;
 
 import java.io.*;
 
